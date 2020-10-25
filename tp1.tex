@@ -1,0 +1,219 @@
+\documentclass[
+11pt,
+spanish,
+singlespacing,
+parskip, 
+headsepline,
+a4paper
+]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{palatino} 
+\usepackage{float} 
+\usepackage{caption}
+\captionsetup[table]{labelformat=empty}
+
+\title{Master Test Plan \\ Monitoreo Ambiental Integrado a Enterprise Buildings Integrator de Honeywell}
+\author{Ing. Gonzalo Nahuel Vaca}
+\date{Octubre, 2020}
+
+\renewcommand{\contentsname}{Tabla de contenido}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+
+\begin{table}[b]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Fecha & Versión & Modificación \\ \hline
+25/10/2020 & 1.0 & Entrega inicial \\ \hline
+\end{tabular}
+\end{table}
+\thispagestyle{empty}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+\label{sec:introduccion}
+El objetivo de este documento es detallar todos los aspectos referidos al Master Test Plan, (plan maestro de pruebas) del proyecto "Monitoreo Ambiental Integrado a Enterprise Buildings Integrator de Honeywell".
+El proyecto tiene como objetivo recolectar las mediciones de los sensores de campo a través de un Broker MQTT, almacenarlos y dejarlos a disposición de un sistema Enterprise Buildings Integrator (EBI), que utiliza el protocolo MODBUS para comunicarse con el exterior.
+El sistema tiene que ser accesible desde un dispositivo móvil u ordenador con la finalidad de gestionarlo y realizar calibraciones de los sensores. \\
+El proyecto en desarrollo consiste en un servidor corriendo Debian Buster sobre el cual se montará un sistema con micro-servicios que cumplirán los requerimientos del cliente, los servicios son:
+
+\begin{itemize}
+\item Broker MQTT
+\item Base de datos NoSQL
+\item Frontend Single Web Application
+\item API para dispositivos con protocolo MQTT
+\item API para el frontend con protocolo HTTP
+\item API para EBI con protocolo MODBUS
+\end{itemize}
+
+\section{Asignaciones}
+
+\subsection{Responsable}
+El responsable de la elaboracíon de este documento es el ingeniero a cargo del desarrollo del proyecto, Gonzalo Nahuel Vaca.
+
+\subsection{Contratista}
+La asignación es ejecutada bajo responsabilidad de Gonzalo Nahuel Vaca, jefe de testing del desarrollo de este proyecto.
+
+\subsection{Alcances}
+El alcance del test de aceptación es el "Monitoreo Ambiental Integrado a Enterprise Buildings Integrator de Honeywell", versión 1.0.
+
+\subsection{Objetivos}
+Los objetivos son:
+\begin{itemize}
+\item Determinar si el sistema cumple con los requerimientos.
+\item Reportar las diferencias entre lo observado y el comportamiento deseado.
+\end{itemize}
+
+\section{Estrategia general del test}
+
+\subsection{Características de calidad}
+Se seleccionan solo aquellas características de calidad que tienen un impacto significativo en el producto.
+\begin{itemize}
+\item \underline{40\% Funcionalidad:} Se le asigna un alto nivel de importancia ya que las funciones del producto impactan en el proceso de certificación al cual se somete el cliente.
+\item \underline{40\% Fiabilidad:} El peso específico asignado a esta característica se basa en la realidad del cliente. Quien debe realizar un costoso proceso de auditoría cada vez que el producto deje de sostener su nivel de funcionalidad. 
+\item \underline{20\% Usabilidad:} El producto será utilizado por personal con bajo nivel de conocimientos técnicos, debido a los costos económicos que pueden generar los errores al utilizar el sistema, la interfaz gráfica debe ser intuitiva y clara en todo momento. 
+\end{itemize}
+
+\subsection{Asignación de niveles de prueba a las características de calidad}
+\label{subsec:asignacion}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{r|ccc}
+		                                   & Funcionalidad & Fiabilidad & Usabilidad \\ \hline
+		Importancia relativa (\%)          & 40            & 40         & 20         \\
+		Unit test                          & ++            &            &            \\
+		Hardware/software integration test &               & ++         &            \\
+		System test                        & +             &            & +          \\
+		Acceptance test                    & ++            &            & +          \\
+		Field test                         &               & +          & ++         \\
+	\end{tabular}
+\end{table}
+
+Se indica a continuación las razones de la asignación de los niveles de prueba.
+
+\begin{itemize}
+\item \underline{Funcionalidad:} Las pruebas unitarias y las pruebas de aceptación son el pilar por el cual se determinará el cumplimiento de los requerimientos de funcionalidad, en menor medida, las pruebas de sistema. Las pruebas unitarias, probarán una por una cada función, mientras que la prueba de aceptación sellarán con el cliente que dichas funcionalidades satisfacen los requerimientos. Finalmente se controla todo con una prueba de sistema.
+\item \underline{Fiabilidad:} La integración entre el hardware y el software es fundamental para determinar que el sistema es fiable, esto se debe a la multiplicidad de dispositivos y protocolos involucrados en el proyecto. Finalmente, la prueba de campo servirá para validar las pruebas de integración.
+\item \underline{Usabilidad:} Las pruebas en campo con personal real es el fundamento de la usabilidad, ver como interactua realmente el usuario final con el sistema, si hay confusión con el flujo del programa o si el usuario logra corromper la interfaz gráfica, es lo más importante. Luego se siguen las pruebas de aceptación y sistema.
+\end{itemize}
+
+\section{Estrategia por nivel de prueba}
+Por cada nivel indicado en \ref{subsec:asignacion}, se evalúa la estrategia con la que se lo aborda.
+
+\subsection{Selección de características de calidad y determinación de la importancia relativa por nivel de prueba}
+
+Se indican a continuación, para cada nivel de prueba, las características de calidad y la importancia relativa de cada una de ellas.
+
+\begin{table}[H]
+\centering
+\caption{Unit test}
+\begin{tabular}{c|c}
+Característica de calidad & Importancia relativa \\ \hline
+Funcionalidad & 100 \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Hardware/software integration test}
+\begin{tabular}{c|c}
+Característica de calidad & Importancia relativa \\ \hline
+Fiabilidad & 100 \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{System test}
+\begin{tabular}{c|c}
+Característica de calidad & Importancia relativa \\ \hline
+Fiabilidad & 50 \\
+Usabilidad & 50 \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Acceptance test}
+\begin{tabular}{c|c}
+Característica de calidad & Importancia relativa \\ \hline
+Funcionalidad & 75 \\
+Usabilidad & 25 \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Field test}
+\begin{tabular}{c|c}
+Característica de calidad & Importancia relativa \\ \hline
+Fiabilidad & 25 \\
+Usabilidad & 75 \\
+\end{tabular}
+\end{table}
+
+\subsection{División del sistema en subsistemas}
+Como se definieron los micro-servicios en el punto \ref{sec:introduccion}, se divide el proyecto en los siguientes subsistemas:
+
+\begin{itemize}
+\item Parte A. Broker MQTT
+\item Parte B. Base de datos NoSQL
+\item Parte C. Frontend Single Web Application
+\item Parte D. API para dispositivos con protocolo MQTT
+\item Parte E. API para el frontend con protocolo HTTP
+\item Parte F. API para EBI con protocolo MODBUS
+\end{itemize}
+
+\subsection{Determinación de la importancia relativa de los subsistemas}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c}
+Subsistema                                         & Importancia Relativa (\%) \\ \hline
+Parte A. Broker MQTT                               & 30 \\
+Parte B. Base de datos NoSQL                       & 10 \\
+Parte C. Frontend Single Web Application           & 5 \\
+Parte D. API para dispositivos con protocolo MQTT  & 20 \\
+Parte E. API para el frontend con protocolo HTTP   & 5 \\
+Parte F. API para EBI con protocolo MODBUS         & 30 \\
+\end{tabular}
+\end{table}
+
+\subsection{Determinación de la importancia de test por combinaciones de subsistema / característica de calidad}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{r|ccccccc}
+               & IR (\%) & Parte A & Parte B & Parte C & Parte D & Parte E & Parte F \\ \hline
+Funcionalidad  & 40      & ++      &         &         & +       &         & ++      \\
+Fiabilidad     & 40      & ++      &         &         & +       &         & ++      \\
+Usabilidad     & 20      &         & +       & ++      &         & +       &         \\
+\end{tabular}
+\end{table}
+
+\subsection{Determinación de las técnicas de test a ser utilizadas}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{r|cccccc}
+                           & Parte A & Parte B & Parte C & Parte D & Parte E & Parte F \\ \hline
+State transition testing   & x       & x       & x       & x       & x       & x       \\
+Control flow test          & x       & x       & x       & x       & x       & x       \\
+Elementary comparison test & x       & x       & x       & x       & x       & x       \\
+Classification-tree method & x       & x       & x       & x       & x       & x       \\
+Evolutionary algorithms    & x       & x       & x       & x       & x       & x       \\
+Statistical usage testing  & x       & x       & x       & x       & x       & x       \\
+Rare event testing         & x       & x       & x       & x       & x       & x       \\
+Mutation analysis          & x       & x       & x       & x       & x       & x       \\
+
+\end{tabular}
+\end{table}
+
+\end{document}
